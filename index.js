@@ -9,6 +9,10 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use("/", webhook);
 
+app.get("/ping", (req, res) => {
+  res.send("OK");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(
