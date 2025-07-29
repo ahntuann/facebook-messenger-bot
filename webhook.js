@@ -38,6 +38,10 @@ router.post("/webhook", async (req, res) => {
           });
         } else if (event.message.text) {
           await handleMessage(senderPsid, event.message.text);
+        } else if (event.message.attachments) {
+          // Gọi handleMessage giống như xử lý text
+          const reactionText = "attachment";
+          await handleMessage(senderPsid, reactionText);
         }
       } else if (event.postback) {
         await handlePostback(senderPsid, event.postback);
