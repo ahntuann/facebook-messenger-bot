@@ -66,4 +66,11 @@ module.exports = {
       [senderPsid],
     );
   },
+
+  setHumanTakeover: async (senderPsid, status) => {
+    await db.query(
+      "INSERT INTO users (psid, is_human_takeover) VALUES ($1, $2) ON CONFLICT (psid) DO UPDATE SET is_human_takeover = $2",
+      [senderPsid, status],
+    );
+  },
 };
