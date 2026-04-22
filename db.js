@@ -1,11 +1,18 @@
 const { Pool } = require("pg");
 require("dotenv").config();
 
+const connectionString = process.env.DATABASE_URL;
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: connectionString,
   ssl: {
-    rejectUnauthorized: false, // Bắt buộc khi dùng các dịch vụ như Neon/Render/Supabase
+    // Ép buộc chấp nhận chứng chỉ tự ký
+    rejectUnauthorized: false,
   },
+});
+
+pool.on("connect", () => {
+  console.log("✅ Đã kết nối thành công tới Database qua Pooler!");
 });
 
 module.exports = {
