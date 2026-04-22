@@ -26,7 +26,7 @@ module.exports = {
   STEP7_INTRODUCE_VIETNAMESE: (senderPsid) => ({
     recipient: { id: senderPsid },
     message: {
-      text: "Với sứ mệnh đồng hành cùng SMEs mở rộng và tăng trưởng mạnh mẽ trên thị trường số, Moonpie Global cung cấp giải pháp thương mại điện tử phù hợp với nhu cầu riêng của từng khách hàng.",
+      text: "Hiện tại, Moonpie đang cung cấp dịch vụ Life-cycle Marketing cho các doanh nghiệp Ecommerce cross-border. Các dịch vụ chi tiết bao gồm:",
     },
   }),
 

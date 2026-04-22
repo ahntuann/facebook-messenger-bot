@@ -3,21 +3,33 @@ module.exports = {
     recipient: { id: senderPsid },
     message: {
       text:
-        "Ở Việt Nam chúng tôi cung cấp 2 dịch vụ chính: " +
-        "\n - Retention Marketing (Email, SMS, Loyalty..) " +
-        "\n - Tư vấn Amazon & các sàn thương mại điện tử EU " +
+        " - Email & SMS Marketing " +
+        "\n - Loyalty & Membership " +
+        "\n - Subscription Strategy " +
+        "\n - Message Marketing (Whatsapp/LINE) " +
         "\nAnh/chị cần tư vấn: ",
 
       quick_replies: [
         {
           content_type: "text",
-          title: "Retention Marketing",
-          payload: "STEP9_DIRECTION2_VIETNAMESE",
+          title: "Email & SMS Marketing",
+          payload: "STEP10_VIETNAMESE",
         },
         {
           content_type: "text",
-          title: "Sàn TMĐT quốc tế",
-          payload: "STEP9_DIRECTION1_VIETNAMESE",
+          title: "Loyalty & Membership",
+          payload: "END_CHAT_VIETNAMESE",
+        },
+
+        {
+          content_type: "text",
+          title: "Subscription Strategy",
+          payload: "END_CHAT_VIETNAMESE",
+        },
+        {
+          content_type: "text",
+          title: "Message Marketing",
+          payload: "END_CHAT_VIETNAMESE",
         },
       ],
     },

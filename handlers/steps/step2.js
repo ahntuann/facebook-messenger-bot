@@ -2,20 +2,9 @@ module.exports = {
   STEP2_DIRECTION1_VIETNAMESE: (senderPsid) => ({
     recipient: { id: senderPsid },
     message: {
-      text: "Moonpie có thể liên hệ với anh chị qua phương thức nào?",
+      text: "Anh chị vui lòng nhập thông tin liên hệ tại đây để Moonpie tiếp tục hỗ trợ anh chị ạ",
 
       quick_replies: [
-        {
-          content_type: "text",
-          title: "Số điện thoại",
-          payload: "STEP2_DIRECTION1_2_VIETNAMESE",
-        },
-        {
-          content_type: "text",
-          title: "Email",
-          payload: "STEP2_DIRECTION1_2_VIETNAMESE",
-        },
-
         {
           content_type: "text",
           title: "Zalo",
@@ -24,6 +13,22 @@ module.exports = {
         {
           content_type: "text",
           title: "Telegram",
+          payload: "STEP2_DIRECTION1_2_VIETNAMESE",
+        },
+
+        {
+          content_type: "text",
+          title: "Whatsapp",
+          payload: "STEP2_DIRECTION1_2_VIETNAMESE",
+        },
+        {
+          content_type: "text",
+          title: "Messenger",
+          payload: "STEP2_DIRECTION1_2_VIETNAMESE",
+        },
+        {
+          content_type: "text",
+          title: "Khác",
           payload: "STEP2_DIRECTION1_2_VIETNAMESE",
         },
       ],
@@ -40,20 +45,9 @@ module.exports = {
   STEP2_DIRECTION2_VIETNAMESE: (senderPsid) => ({
     recipient: { id: senderPsid },
     message: {
-      text: "Moonpie có thể liên hệ với anh chị qua phương thức nào?",
+      text: "Anh chị vui lòng lựa chọn thông tin liên hệ tại đây để được nhân viên CSKH hỗ trợ trực tiếp",
 
       quick_replies: [
-        {
-          content_type: "text",
-          title: "Số điện thoại",
-          payload: "STEP2_DIRECTION2_2_VIETNAMESE",
-        },
-        {
-          content_type: "text",
-          title: "Email",
-          payload: "STEP2_DIRECTION2_2_VIETNAMESE",
-        },
-
         {
           content_type: "text",
           title: "Zalo",
@@ -62,6 +56,22 @@ module.exports = {
         {
           content_type: "text",
           title: "Telegram",
+          payload: "STEP2_DIRECTION2_2_VIETNAMESE",
+        },
+
+        {
+          content_type: "text",
+          title: "Whatsapp",
+          payload: "STEP2_DIRECTION2_2_VIETNAMESE",
+        },
+        {
+          content_type: "text",
+          title: "Messenger",
+          payload: "STEP2_DIRECTION2_2_VIETNAMESE",
+        },
+        {
+          content_type: "text",
+          title: "Khác",
           payload: "STEP2_DIRECTION2_2_VIETNAMESE",
         },
       ],

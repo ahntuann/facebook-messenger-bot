@@ -1,22 +1,22 @@
 module.exports = {
-  STEP1: (senderPsid) => ({
-    recipient: { id: senderPsid },
-    message: {
-      text: "Your language / Ngôn ngữ của bạn",
-      quick_replies: [
-        {
-          content_type: "text",
-          title: "Tiếng Việt",
-          payload: "STEP1_2_VIETNAMESE",
-        },
-        {
-          content_type: "text",
-          title: "English",
-          payload: "STEP1_2_ENGLISH",
-        },
-      ],
-    },
-  }),
+  // STEP1: (senderPsid) => ({
+  //   recipient: { id: senderPsid },
+  //   message: {
+  //     text: "Your language / Ngôn ngữ của bạn",
+  //     quick_replies: [
+  //       {
+  //         content_type: "text",
+  //         title: "Tiếng Việt",
+  //         payload: "STEP1_2_VIETNAMESE",
+  //       },
+  //       {
+  //         content_type: "text",
+  //         title: "English",
+  //         payload: "STEP1_2_ENGLISH",
+  //       },
+  //     ],
+  //   },
+  // }),
 
   STEP1_2_VIETNAMESE: (senderPsid) => ({
     recipient: { id: senderPsid },

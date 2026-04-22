@@ -1,13 +1,15 @@
+const { send } = require("express/lib/response");
+
 module.exports = {
   STEP10_VIETNAMESE: (senderPsid) => ({
     recipient: { id: senderPsid },
     message: {
-      text: "Anh/chị đã từng làm email marketing chưa?",
+      text: "Anh/chị đã từng hoặc đang làm email marketing chưa?",
 
       quick_replies: [
         {
           content_type: "text",
-          title: "Đã có kinh nghiệm",
+          title: "Đã có kinh nghiệm/Đang làm",
           payload: "STEP10_DIRECTION1_VIETNAMESE",
         },
         {
@@ -41,14 +43,12 @@ module.exports = {
   STEP10_DIRECTION1_1_VIETNAMESE: async (
     senderPsid,
     callSendAPI,
-    nextStepFunc
+    nextStepFunc,
   ) => {
     await callSendAPI({
       recipient: { id: senderPsid },
       message: {
-        text:
-          "Moonpie tự hào khi là partner hạng Vàng đầu tiên của Klaviyo tại Việt Nam. Với nhiều năm đồng hành cùng Klaviyo, chúng tôi đã hỗ trợ rất nhiều doanh nghiệp đạt được hiệu quả kinh doanh." +
-          "\nMoonpie rất hân hạnh hỗ trợ anh/chị chi tiết hơn về tình hình của doanh nghiệp mình ạ",
+        text: "Moonpie tự hào khi là partner hạng Vàng đầu tiên của Klaviyo tại Việt Nam. Với nhiều năm đồng hành cùng Klaviyo, chúng tôi đã hỗ trợ rất nhiều doanh nghiệp đạt được hiệu quả kinh doanh.",
       },
     });
 
@@ -59,21 +59,28 @@ module.exports = {
   STEP10_DIRECTION1_2_VIETNAMESE: (senderPsid) => ({
     recipient: { id: senderPsid },
     message: {
-      text: "Vui lòng nhập tên nền tảng",
+      text: "[Hãy nhập tên nền tảng]" + "\n___________________________",
     },
   }),
 
   STEP10_DIRECTION2_VIETNAMESE: async (
     senderPsid,
     callSendAPI,
-    nextStepFunc
+    nextStepFunc,
   ) => {
     await callSendAPI({
       recipient: { id: senderPsid },
       message: {
         text:
-          "Nếu anh/chị tìm một kênh marketing hiệu quả và tiết kiệm, Email Marketing là lựa chọn lý tưởng." +
-          "\nLà đối tác hạng Vàng đầu tiên của Klaviyo tại Việt Nam, Moonpie cam kết tối ưu, đo lường từng email để xây dựng quan hệ lâu dài và tăng giá trị vòng đời khách hàng.",
+          // "Nếu anh/chị tìm một kênh marketing hiệu quả và tiết kiệm, Email Marketing là lựa chọn lý tưởng." +
+          // "\nLà đối tác hạng Vàng đầu tiên của Klaviyo tại Việt Nam, Moonpie cam kết tối ưu, đo lường từng email để xây dựng quan hệ lâu dài và tăng giá trị vòng đời khách hàng.",
+          "Hiện tại, Moonpie đang cung cấp gói Email Marketing với đầy đủ các bước hỗ trợ toàn diện cho anh/chị, chi tiết dịch vụ bao gồm: " +
+          "\n✅  Audit miễn phí hệ thống hiện tại" +
+          "\n✅ Lên chiến lược và kế hoạch cho từng giai đoạn" +
+          "\n✅  Sản xuất nội dung và thiết kế email theo tone & voice của thương hiệu" +
+          "\n✅  QA QC trước khi gửi email" +
+          "\n✅ A/B Testing & Tối ưu hóa" +
+          "\nAnh/chị có muốn được tư vấn kỹ hơn không ạ?",
       },
     });
 
@@ -126,7 +133,7 @@ module.exports = {
   STEP10_DIRECTION1_1_ENGLISH: async (
     senderPsid,
     callSendAPI,
-    nextStepFunc
+    nextStepFunc,
   ) => {
     await callSendAPI({
       recipient: { id: senderPsid },

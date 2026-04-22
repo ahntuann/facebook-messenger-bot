@@ -22,6 +22,8 @@ module.exports = async function handlePostback(senderPsid, postback) {
   let response;
 
   if (payload === "GET_STARTED_PAYLOAD") {
+    await userFlowManager.setHumanTakeover(senderPsid, false);
+
     response = {
       recipient: { id: senderPsid },
       message: {
@@ -29,13 +31,20 @@ module.exports = async function handlePostback(senderPsid, postback) {
         quick_replies: [
           {
             content_type: "text",
-            title: "Bắt đầu / Start now",
-            payload: "STEP1",
+            title: "Bắt đầu",
+            payload: "STEP1_2_VIETNAMESE",
           },
         ],
       },
     };
-  } else if (step1[payload]) {
+  }
+  // else if (payload === "STEP1") {
+  //   // Lưu step là STEP1 để lần sau khách bấm Quick Reply (Tiếng Việt)
+  //   // Webhook sẽ thấy current_step !== null và cho phép đi tiếp
+  //   await userFlowManager.setStep(senderPsid, "STEP1");
+  //   response = step1[payload](senderPsid);
+  // }
+  else if (step1[payload]) {
     response = step1[payload](senderPsid);
   } else if (step2[payload]) {
     if (
@@ -44,7 +53,7 @@ module.exports = async function handlePostback(senderPsid, postback) {
       payload === "STEP2_DIRECTION2_2_ENGLISH" ||
       payload === "STEP2_DIRECTION1_2_ENGLISH"
     ) {
-      userFlowManager.setStep(senderPsid, payload);
+      await userFlowManager.setStep(senderPsid, payload);
     }
 
     response = step2[payload](senderPsid);
@@ -80,32 +89,40 @@ module.exports = async function handlePostback(senderPsid, postback) {
     response = step9[payload](senderPsid);
   } else if (step10[payload]) {
     if (payload === "STEP10_DIRECTION1_1_VIETNAMESE") {
-      step10.STEP10_DIRECTION1_1_VIETNAMESE(senderPsid, callSendAPI, () => {
-        callSendAPI(step11["STEP11_VIETNAMESE"](senderPsid));
-        userFlowManager.setStep(senderPsid, "STEP12_VIETNAMESE");
-      });
+      step10.STEP10_DIRECTION1_1_VIETNAMESE(
+        senderPsid,
+        callSendAPI,
+        async () => {
+          // callSendAPI(step11["STEP11_VIETNAMESE"](senderPsid));
+          // await userFlowManager.setStep(senderPsid, "STEP12_VIETNAMESE");
+          callSendAPI(endChat["END_CHAT_VIETNAMESE"](senderPsid));
+          await userFlowManager.setStep(senderPsid, "FINISHED");
+        },
+      );
 
       return;
     } else if (payload === "STEP10_DIRECTION1_1_ENGLISH") {
-      step10.STEP10_DIRECTION1_1_ENGLISH(senderPsid, callSendAPI, () => {
+      step10.STEP10_DIRECTION1_1_ENGLISH(senderPsid, callSendAPI, async () => {
         callSendAPI(step11["STEP11_ENGLISH"](senderPsid));
-        userFlowManager.setStep(senderPsid, "STEP12_ENGLISH");
+        await userFlowManager.setStep(senderPsid, "STEP12_ENGLISH");
       });
 
       return;
     }
 
     if (payload === "STEP10_DIRECTION2_VIETNAMESE") {
-      step10.STEP10_DIRECTION2_VIETNAMESE(senderPsid, callSendAPI, () => {
-        callSendAPI(step11["STEP11_VIETNAMESE"](senderPsid));
-        userFlowManager.setStep(senderPsid, "STEP12_VIETNAMESE");
+      step10.STEP10_DIRECTION2_VIETNAMESE(senderPsid, callSendAPI, async () => {
+        // callSendAPI(step11["STEP11_VIETNAMESE"](senderPsid));
+        // await userFlowManager.setStep(senderPsid, "STEP12_VIETNAMESE");
+        callSendAPI(endChat["END_CHAT_VIETNAMESE"](senderPsid));
+        await userFlowManager.setStep(senderPsid, "FINISHED");
       });
 
       return;
     } else if (payload === "STEP10_DIRECTION2_ENGLISH") {
-      step10.STEP10_DIRECTION2_ENGLISH(senderPsid, callSendAPI, () => {
+      step10.STEP10_DIRECTION2_ENGLISH(senderPsid, callSendAPI, async () => {
         callSendAPI(step11["STEP11_ENGLISH"](senderPsid));
-        userFlowManager.setStep(senderPsid, "STEP12_ENGLISH");
+        await userFlowManager.setStep(senderPsid, "STEP12_ENGLISH");
       });
 
       return;
@@ -115,94 +132,97 @@ module.exports = async function handlePostback(senderPsid, postback) {
       payload === "STEP10_DIRECTION1_2_VIETNAMESE" ||
       payload === "STEP10_DIRECTION1_2_ENGLISH"
     ) {
-      userFlowManager.setStep(senderPsid, payload);
+      await userFlowManager.setStep(senderPsid, payload);
     }
 
     response = step10[payload](senderPsid);
-  } else if (step13[payload]) {
-    if (
-      payload === "STEP13_DIRECTION1_2_VIETNAMESE" ||
-      payload === "STEP13_DIRECTION1_2_ENGLISH"
-    ) {
-      userFlowManager.setStep(senderPsid, payload);
-    }
+  }
+  // else if (step13[payload]) {
+  //   if (
+  //     payload === "STEP13_DIRECTION1_2_VIETNAMESE" ||
+  //     payload === "STEP13_DIRECTION1_2_ENGLISH"
+  //   ) {
+  //     await userFlowManager.setStep(senderPsid, payload);
+  //   }
 
-    response = step13[payload](senderPsid);
-  } else if (step14[payload]) {
-    if (
-      payload === "STEP14_DIRECTION1_1_VIETNAMESE" ||
-      payload === "STEP14_DIRECTION1_2_VIETNAMESE" ||
-      payload === "STEP14_DIRECTION1_3_VIETNAMESE" ||
-      payload === "STEP14_DIRECTION1_4_VIETNAMESE"
-    ) {
-      step14[payload](senderPsid, callSendAPI, () => {
-        callSendAPI(step14["STEP14_DIRECTION1_X_1_VIETNAMESE"](senderPsid));
-      });
+  //   response = step13[payload](senderPsid);
+  // } else if (step14[payload]) {
+  //   if (
+  //     payload === "STEP14_DIRECTION1_1_VIETNAMESE" ||
+  //     payload === "STEP14_DIRECTION1_2_VIETNAMESE" ||
+  //     payload === "STEP14_DIRECTION1_3_VIETNAMESE" ||
+  //     payload === "STEP14_DIRECTION1_4_VIETNAMESE"
+  //   ) {
+  //     step14[payload](senderPsid, callSendAPI, () => {
+  //       callSendAPI(step14["STEP14_DIRECTION1_X_1_VIETNAMESE"](senderPsid));
+  //     });
 
-      return;
-    } else if (
-      payload === "STEP14_DIRECTION1_1_ENGLISH" ||
-      payload === "STEP14_DIRECTION1_2_ENGLISH" ||
-      payload === "STEP14_DIRECTION1_3_ENGLISH" ||
-      payload === "STEP14_DIRECTION1_4_ENGLISH"
-    ) {
-      step14[payload](senderPsid, callSendAPI, () => {
-        callSendAPI(step14["STEP14_DIRECTION1_X_1_ENGLISH"](senderPsid));
-      });
+  //     return;
+  //   } else if (
+  //     payload === "STEP14_DIRECTION1_1_ENGLISH" ||
+  //     payload === "STEP14_DIRECTION1_2_ENGLISH" ||
+  //     payload === "STEP14_DIRECTION1_3_ENGLISH" ||
+  //     payload === "STEP14_DIRECTION1_4_ENGLISH"
+  //   ) {
+  //     step14[payload](senderPsid, callSendAPI, () => {
+  //       callSendAPI(step14["STEP14_DIRECTION1_X_1_ENGLISH"](senderPsid));
+  //     });
 
-      return;
-    } else if (
-      payload === "STEP14_DIRECTION3_1_VIETNAMESE" ||
-      payload === "STEP14_DIRECTION3_2_VIETNAMESE" ||
-      payload === "STEP14_DIRECTION3_3_VIETNAMESE"
-    ) {
-      step14[payload](
-        senderPsid,
-        callSendAPI,
-        () => {
-          callSendAPI(step14["STEP14_DIRECTION3_X_1_VIETNAMESE"](senderPsid));
-        },
-        () => {
-          callSendAPI(step14["STEP14_DIRECTION3_X_2_VIETNAMESE"](senderPsid));
-        },
-        () => {
-          callSendAPI(step14["STEP14_DIRECTION3_X_3_VIETNAMESE"](senderPsid));
-        }
-      );
+  //     return;
+  //   } else if (
+  //     payload === "STEP14_DIRECTION3_1_VIETNAMESE" ||
+  //     payload === "STEP14_DIRECTION3_2_VIETNAMESE" ||
+  //     payload === "STEP14_DIRECTION3_3_VIETNAMESE"
+  //   ) {
+  //     step14[payload](
+  //       senderPsid,
+  //       callSendAPI,
+  //       () => {
+  //         callSendAPI(step14["STEP14_DIRECTION3_X_1_VIETNAMESE"](senderPsid));
+  //       },
+  //       () => {
+  //         callSendAPI(step14["STEP14_DIRECTION3_X_2_VIETNAMESE"](senderPsid));
+  //       },
+  //       () => {
+  //         callSendAPI(step14["STEP14_DIRECTION3_X_3_VIETNAMESE"](senderPsid));
+  //       },
+  //     );
 
-      return;
-    } else if (
-      payload === "STEP14_DIRECTION3_1_ENGLISH" ||
-      payload === "STEP14_DIRECTION3_2_ENGLISH" ||
-      payload === "STEP14_DIRECTION3_3_ENGLISH"
-    ) {
-      step14[payload](
-        senderPsid,
-        callSendAPI,
-        () => {
-          callSendAPI(step14["STEP14_DIRECTION3_X_1_ENGLISH"](senderPsid));
-        },
-        () => {
-          callSendAPI(step14["STEP14_DIRECTION3_X_2_ENGLISH"](senderPsid));
-        },
-        () => {
-          callSendAPI(step14["STEP14_DIRECTION3_X_3_ENGLISH"](senderPsid));
-        }
-      );
+  //     return;
+  //   } else if (
+  //     payload === "STEP14_DIRECTION3_1_ENGLISH" ||
+  //     payload === "STEP14_DIRECTION3_2_ENGLISH" ||
+  //     payload === "STEP14_DIRECTION3_3_ENGLISH"
+  //   ) {
+  //     step14[payload](
+  //       senderPsid,
+  //       callSendAPI,
+  //       () => {
+  //         callSendAPI(step14["STEP14_DIRECTION3_X_1_ENGLISH"](senderPsid));
+  //       },
+  //       () => {
+  //         callSendAPI(step14["STEP14_DIRECTION3_X_2_ENGLISH"](senderPsid));
+  //       },
+  //       () => {
+  //         callSendAPI(step14["STEP14_DIRECTION3_X_3_ENGLISH"](senderPsid));
+  //       },
+  //     );
 
-      return;
-    } else if (
-      payload === "STEP14_DIRECTION2_VIETNAMESE" ||
-      payload === "STEP14_DIRECTION2_MORE_VIETNAMESE" ||
-      payload === "STEP14_DIRECTION2_ENGLISH" ||
-      payload === "STEP14_DIRECTION2_MORE_ENGLISH"
-    ) {
-      userFlowManager.setStep(senderPsid, payload);
-    }
+  //     return;
+  //   } else if (
+  //     payload === "STEP14_DIRECTION2_VIETNAMESE" ||
+  //     payload === "STEP14_DIRECTION2_MORE_VIETNAMESE" ||
+  //     payload === "STEP14_DIRECTION2_ENGLISH" ||
+  //     payload === "STEP14_DIRECTION2_MORE_ENGLISH"
+  //   ) {
+  //     await userFlowManager.setStep(senderPsid, payload);
+  //   }
 
-    response = step14[payload](senderPsid);
-  } else if (endChat[payload]) {
+  //   response = step14[payload](senderPsid);
+  // }
+  else if (endChat[payload]) {
     response = endChat[payload](senderPsid);
+    await userFlowManager.setStep(senderPsid, "FINISHED");
   } else {
     response = {
       recipient: { id: senderPsid },
