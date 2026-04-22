@@ -26,7 +26,9 @@ module.exports = {
   STEP7_INTRODUCE_VIETNAMESE: (senderPsid) => ({
     recipient: { id: senderPsid },
     message: {
-      text: "Hiện tại, Moonpie đang cung cấp dịch vụ Life-cycle Marketing cho các doanh nghiệp Ecommerce cross-border. Các dịch vụ chi tiết bao gồm:",
+      text:
+        "Với sứ mệnh đồng hành và hỗ trợ các doanh nghiệp vừa và nhỏ mở rộng quy mô kinh doanh và tăng trưởng mạnh mẽ trên thị trường số, Moonpie tự hào khi là partner hạng Vàng đầu tiên của Klaviyo tại Việt Nam" +
+        "Moonpie Global cung cấp các giải pháp Life-cycle Marketing phù hợp với nhu cầu đặc thù của từng khách hàng. ",
     },
   }),
 

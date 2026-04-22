@@ -3,7 +3,8 @@ module.exports = {
     recipient: { id: senderPsid },
     message: {
       text:
-        " - Email & SMS Marketing " +
+        "Hiện tại, Moonpie đang cung cấp dịch vụ Life-cycle Marketing cho các doanh nghiệp Ecommerce cross-border. Các dịch vụ chi tiết bao gồm:" +
+        "\n - Email & SMS Marketing " +
         "\n - Loyalty & Membership " +
         "\n - Subscription Strategy " +
         "\n - Message Marketing (Whatsapp/LINE) " +
